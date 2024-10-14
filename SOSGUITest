@@ -1,0 +1,45 @@
+import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.*;
+import javax.swing.*;
+
+public class SOSGUITest {
+
+    @Test
+    public void testMain() {
+        SwingUtilities.invokeLater(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    SOSGUI sosgui = new SOSGUI();
+                    sosgui.setVisible(true);
+                    
+                    // Check if the frame is visible
+                    assertTrue(sosgui.isVisible());
+
+                    // Check if the title is set correctly
+                    assertEquals("SOS Game", sosgui.getTitle());
+
+                    // Check if the default close operation is set correctly
+                    assertEquals(JFrame.EXIT_ON_CLOSE, sosgui.getDefaultCloseOperation());
+
+                    // Check if the layout is set correctly
+                    assertTrue(sosgui.getLayout() instanceof BorderLayout);
+
+                    // Check if the control panel is added to the frame
+                    Component[] components = sosgui.getContentPane().getComponents();
+                    boolean controlPanelFound = false;
+                    for (Component component : components) {
+                        if (component instanceof JPanel) {
+                            controlPanelFound = true;
+                            break;
+                        }
+                    }
+                    assertTrue(controlPanelFound);
+
+                } catch (Exception e) {
+                    fail("Exception occurred during test: " + e.getMessage());
+                }
+            }
+        });
+    }
+}
